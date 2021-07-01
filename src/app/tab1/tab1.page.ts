@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Peliculas } from '../interfaces/interfaces';
+import { Pelicula } from '../interfaces/interfaces';
 import { MoviesService } from '../services/movies.service';
 
 @Component({
@@ -10,8 +10,8 @@ import { MoviesService } from '../services/movies.service';
 })
 export class Tab1Page {
 
-  peliculasRecientes: Peliculas[]=[];
-  populares: Peliculas[]=[];
+  peliculasRecientes: Pelicula[]=[];
+  populares: Pelicula[]=[];
 
  
 
