@@ -80,13 +80,14 @@
     <ion-buttons slot="start">
       <ion-button (click)="regresar()">
         <ion-icon slot="start" name="arrow-undo-outline"></ion-icon>
-        <ion-label color="priamry">Regresar</ion-label>
+        <ion-label color="primary">Regresar</ion-label>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="favorito()">
-        <ion-icon slot="end" name="star-outline"></ion-icon>
-        <ion-label color="priamry">Favorito</ion-label>
+        <ion-icon *ngIf="existe" slot="end" name="star" color="danger"></ion-icon>
+        <ion-icon *ngIf="!existe" slot="end" name="star-outline"></ion-icon>
+        <ion-label color="primary">Favorito</ion-label>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

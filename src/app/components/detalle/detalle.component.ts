@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Cast, PeliculaDetalle } from 'src/app/interfaces/interfaces';
+import { DataLocalService } from 'src/app/services/data-local.service';
 import { MoviesService } from 'src/app/services/movies.service';
 
 @Component({
@@ -15,40 +16,50 @@ export class DetalleComponent implements OnInit {
   oculto = 150;
 
   pelicula: PeliculaDetalle = {};
-  actores: Cast[]=[];
+  actores: Cast[] = [];
+  existe: boolean;
 
-  slideOptActores={
+  slideOptActores = {
     slidesPerView: 3.3,
     freeMode: true,
     spacebetween: -5
   };
 
   constructor(
-    private moviesService : MoviesService,
-    private modalCtrl: ModalController
+    private moviesService: MoviesService,
+    private modalCtrl: ModalController,
+    private datalocalSrv : DataLocalService
   ) { }
 
-  ngOnInit() {
-   // console.log('ID',this.id);
+  async ngOnInit() {
+    // console.log('ID',this.id);
 
-   this.moviesService.getPeliculasDetalle(this.id)
-   .subscribe( resp => {
-     console.log(resp);
-     this.pelicula=resp;
-   });
+    this.existe = await this.datalocalSrv.existePelicula(this.id);
+    console.log('detalle component existe:', this.existe);
 
-   this.moviesService.getActoresPelicula(this.id)
-   .subscribe( resp => {
-     console.log(resp);
-     this.actores = resp.cast;
-   });
+    this.moviesService.getPeliculasDetalle(this.id)
+      .subscribe(resp => {
+        console.log(resp);
+        this.pelicula = resp;
+      });
+
+    this.moviesService.getActoresPelicula(this.id)
+      .subscribe(resp => {
+        console.log(resp);
+        this.actores = resp.cast;
+      });
 
   }
 
-  regresar(){
+  regresar() {
     this.modalCtrl.dismiss();
   }
 
-  favorito(){}
+  favorito() {
+    this.existe = !this.existe;
+    
+    this.datalocalSrv.guardarPelicula(this.pelicula);
+
+  }
 
 }

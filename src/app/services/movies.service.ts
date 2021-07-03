@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { PeliculaDetalle, RespuestaCredits, RespuestaMDB } from '../interfaces/interfaces';
+import { Pelicula, PeliculaDetalle, RespuestaCredits, RespuestaMDB } from '../interfaces/interfaces';
 
 const URL = environment.url;
 const apiKey = environment.apiKey;
@@ -54,6 +54,10 @@ export class MoviesService {
 
   getActoresPelicula(id: string) {
     return this.ejecutarQuery<RespuestaCredits>(`/movie/${id}/credits?a=1`); // ?a=1 es para omitir problema del "&" 
+  }
+
+  buscarPeliculas(texto: string){
+    return this.ejecutarQuery<Pelicula>(`/search/movie?query=${texto}`)
   }
 
 }

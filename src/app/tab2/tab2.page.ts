@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { DetalleComponent } from '../components/detalle/detalle.component';
+import { Pelicula } from '../interfaces/interfaces';
+import { MoviesService } from '../services/movies.service';
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +11,49 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+  textoBuscar = '';
+  ideas: string[] = ['Spiderman', 'Avengers', 'Alien', 'Depredador'];
+  peliculas: Pelicula[] = [];
+  buscando = false;
+
+  slideOpts = {
+    slidesPerView: 1.2,
+    freeMode: true
+  };
+
+
+  constructor(
+    private moviesService: MoviesService,
+    private modalCtrl : ModalController
+  ) { }
+
+  buscar(event) {
+
+    const valor = event.detail.value;
+
+    if (valor) {
+      this.buscando = true;
+      this.moviesService.buscarPeliculas(valor)
+        .subscribe(resp => {
+          console.log(resp);
+          this.peliculas = resp['results']; // ['results'] para no crear interfaz 
+          this.buscando = false;
+        });
+    } else {
+      this.buscando= false;
+      this.peliculas=[];
+      return ;
+    }
+  }
+
+  async verDetalle(id: number) {
+    const modal = await this.modalCtrl.create({
+       component: DetalleComponent,
+       componentProps: {
+         id
+       }
+     });
+     modal.present();
+   }
 
 }
