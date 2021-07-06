@@ -6,6 +6,23 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-<app-slideshow-poster [peliculas]="peliculas" ></app-slideshow-poster>
+
+
+
+  <div *ngFor="let pelicula of favoritoGenero">
+
+    <ion-grid *ngIf="pelicula.pelis.length > 0 ">
+      <ion-row>
+        <ion-col>
+          <h4>{{pelicula.genero}}</h4>
+        </ion-col>
+      </ion-row>
+      <app-slideshow-poster [peliculas]="pelicula.pelis"></app-slideshow-poster>
+    </ion-grid>
+
+
+
+
+  </div>
 
 </ion-content>

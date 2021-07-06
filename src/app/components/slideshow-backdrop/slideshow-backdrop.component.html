@@ -1,6 +1,7 @@
 <ion-slides [options]="slideOpts">
-  <ion-slide *ngFor="let pelicula of peliculas">
-    <ion-card (click)="verDetalle(pelicula.id)">
+  <ion-slide *ngFor="let pelicula of peliculas | filtroImagen">
+    <ion-card (click)="verDetalle(pelicula.id)"
+    *ngIf="pelicula.backdrop_path">
       <img [src]="domSanitizerSrv.bypassSecurityTrustUrl(pelicula.backdrop_path | imagen)">
     </ion-card>
   </ion-slide>

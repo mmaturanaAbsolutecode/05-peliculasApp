@@ -32,20 +32,20 @@ export interface RespuestaMDB {
 }
 
 export interface Pelicula {
-  vote_count: number;
-  id: number;
-  video: boolean;
-  vote_average: number;
-  title: string;
-  popularity: number;
-  poster_path: string;
-  original_language: string;
-  original_title: string;
-  genre_ids: number[];
+  vote_count?: number;
+  id?: number;
+  video?: boolean;
+  vote_average?: number;
+  title?: string;
+  popularity?: number;
+  poster_path?: string;
+  original_language?: string;
+  original_title?: string;
+  genre_ids?: number[];
   backdrop_path?: string;
-  adult: boolean;
-  overview: string;
-  release_date: string;
+  adult?: boolean;
+  overview?: string;
+  release_date?: string;
 }
 
 export interface PeliculaDetalle {
@@ -93,9 +93,9 @@ interface Productioncompany {
   origin_country: string;
 }
 
-interface Genre {
-  id: number;
-  name: string;
+export interface Genre {
+  id?: number;
+  name?: string;
 }
 
 

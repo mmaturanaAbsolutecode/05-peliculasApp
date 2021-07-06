@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Pelicula, PeliculaDetalle, RespuestaCredits, RespuestaMDB } from '../interfaces/interfaces';
+import { Genre, Pelicula, PeliculaDetalle, RespuestaCredits, RespuestaMDB } from '../interfaces/interfaces';
 
 const URL = environment.url;
 const apiKey = environment.apiKey;
@@ -12,6 +12,7 @@ const apiKey = environment.apiKey;
 export class MoviesService {
 
   private popularesPage = 0;
+  generos: Genre[] = [];
 
   constructor(
     private http: HttpClient,
@@ -56,8 +57,21 @@ export class MoviesService {
     return this.ejecutarQuery<RespuestaCredits>(`/movie/${id}/credits?a=1`); // ?a=1 es para omitir problema del "&" 
   }
 
-  buscarPeliculas(texto: string){
+  buscarPeliculas(texto: string) {
     return this.ejecutarQuery<Pelicula>(`/search/movie?query=${texto}`)
+  }
+
+  cargarGeneros(): Promise<any[]> {
+
+    return new Promise(resolve => {
+      this.ejecutarQuery(`/genre/movie/list?a=1`)
+        .subscribe(resp => {
+          this.generos = resp['genres'];
+          //console.log(this.generos);
+          resolve(this.generos);
+        });
+    })
+
   }
 
 }
